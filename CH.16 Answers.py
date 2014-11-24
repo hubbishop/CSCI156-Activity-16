@@ -8,23 +8,17 @@ class Employee():
 class Invalidsocial(ValueError):
     pass
 
-ssn = 'please enter your social security in the format ###-##-####:'
-
-
-
 
 def social(employee_class):
     try:
-        aaa, gg, ssss = input(employee_class.ss).split('-')
+        aaa, gg, ssss = input('please enter your social security in the format ###-##-####:').split('-')
     except ValueError:
         raise Invalidsocial
-    if aaa == '078'and gg == '05' and ssss == '1120':
+    if aaa == '078' and gg == '05' and ssss == '1120':
         raise Invalidsocial
-    if len(aaa) != 3:
+    if len(aaa) != 3 or len(gg) != 2 or len(ssss) != 4:
         raise Invalidsocial
-    if len(gg) != 2:
-        raise Invalidsocial
-    if len(ssss) != 4:
+    if str(aaa) == '000' or str(gg) == '00' or str(ssss) == '0000':
         raise Invalidsocial
     try:
         aaa = int(aaa)
@@ -32,34 +26,20 @@ def social(employee_class):
         ssss = int(ssss)
     except ValueError:
         raise Invalidsocial
-    if str(aaa) == '000':
-        raise Invalidsocial
-    elif 900 <= int(aaa) <= 999:
+    if 900 <= int(aaa) <= 999:
         raise Invalidsocial
     elif int(aaa) == 666:
         raise Invalidsocial
-    if str(gg) == '00':
-            raise Invalidsocial
-
-    elif str(ssss) == '0000':
-        raise Invalidsocial
     else:
-        return aaa, gg, ssss
+        employee_class.ss = aaa, gg, ssss
 
-def socnum():
-    instance1 = Employee()
-    instance1.sn = 'please enter your social security in the format ###-##-####:'
+
+def socnum(employee_class):
     try:
-        social(instance1.sn)
+        social(employee_class)
     except Invalidsocial:
-        socnum()
+        socnum(employee_class)
 
-
-socnum()
-
-
-
-
-
-
-
+employee1 = Employee()
+socnum(employee1)
+print(employee1.ss)
